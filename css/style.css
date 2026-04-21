@@ -1,0 +1,43 @@
+
+body { 
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    background-color: #f0f0f0;
+}
+
+header { 
+    background-color: #2c3e50; 
+    color: white; 
+    padding: 10px 20px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.toolbar { 
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline; 
+}
+
+main { 
+    flex-grow: 1; 
+    display: flex; 
+}
+
+.canvas-container {
+    flex-grow: 3;
+    background-color: #777;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+
