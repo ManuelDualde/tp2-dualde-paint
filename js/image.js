@@ -9,6 +9,13 @@ let btnEscalaGrises = document.getElementById("btn-escalaGrises");
 let btnNegativo = document.getElementById("btn-negativo");
 let btnSepia = document.getElementById("btn-sepia");
 let btnBinarizacion = document.getElementById("btn-binarizacion");
+let btnPosterizacion = document.getElementById("btn-posterizacion");
+let brilloSlider = document.getElementById("brillo-slider");
+
+// Filtros avanzados
+let btnSaturacion = document.getElementById("btn-saturacion");
+let btnBordes = document.getElementById("btn-bordes");
+let btnBlur = document.getElementById("btn-blur");
 
 let imageDataOriginal = null; // ImageData de la imagen original, nunca se modifica
 let img = new Image();
@@ -73,4 +80,33 @@ btnSepia.addEventListener("click", function () {
 
 btnBinarizacion.addEventListener("click", function () {
     aplicarFiltro(aplicarBinarizacion, 128); // umbral por defecto
+});
+
+btnPosterizacion.addEventListener("click", function () {
+    aplicarFiltro(aplicarPosterizacion, 4); // 4 niveles de color
+});
+
+// El slider va de 0 a 100, con 50 = sin cambio (factor 1.0)
+// Mapeo: factor = valor / 50  →  0=negro, 50=original, 100=doble brillo
+brilloSlider.addEventListener("input", function () {
+    const factor = this.value / 50;
+    aplicarFiltro(aplicarBrillo, factor);
+});
+
+// --------------------------------------------------
+// Botones de filtros avanzados
+// --------------------------------------------------
+
+btnSaturacion.addEventListener("click", function () {
+    aplicarFiltro(aplicarSaturacion, 1.5); // factor 1.5 = colores más vivos
+});
+
+btnBordes.addEventListener("click", function () {
+    if (!imageDataOriginal) return;
+    aplicarFiltro(aplicarDeteccionBordes, imageDataOriginal.width, imageDataOriginal.height);
+});
+
+btnBlur.addEventListener("click", function () {
+    if (!imageDataOriginal) return;
+    aplicarFiltro(aplicarBlur, imageDataOriginal.width, imageDataOriginal.height, 2); // radio 2
 });

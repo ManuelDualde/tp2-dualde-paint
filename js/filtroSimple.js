@@ -39,3 +39,35 @@ function aplicarBinarizacion(data, umbral = 128) {
         data[i + 2] = valor; // B
     }
 }
+
+// --------------------------------------------------
+// BRILLO
+// --------------------------------------------------
+// factor = 0   → imagen completamente negra
+// factor = 1   → imagen original sin cambios
+// factor > 1   → imagen más brillante (hasta 2×)
+// --------------------------------------------------
+function aplicarBrillo(data, factor = 1) {
+    for (let i = 0; i < data.length; i += 4) {
+        data[i]     = Math.min(255, data[i]     * factor); // R
+        data[i + 1] = Math.min(255, data[i + 1] * factor); // G
+        data[i + 2] = Math.min(255, data[i + 2] * factor); // B
+    }
+}
+
+// --------------------------------------------------
+// POSTERIZACIÓN
+// --------------------------------------------------
+// Reduce la cantidad de colores posibles a "niveles" escalones.
+// Ejemplo: niveles=4 → cada canal solo puede tomar los valores
+// 0, 85, 170 o 255 (cuatro pasos uniformes).
+// Produce un efecto de ilustración o cartel.
+// --------------------------------------------------
+function aplicarPosterizacion(data, niveles = 4) {
+    const paso = 255 / (niveles - 1);
+    for (let i = 0; i < data.length; i += 4) {
+        data[i]     = Math.round(data[i]     / paso) * paso; // R
+        data[i + 1] = Math.round(data[i + 1] / paso) * paso; // G
+        data[i + 2] = Math.round(data[i + 2] / paso) * paso; // B
+    }
+}
