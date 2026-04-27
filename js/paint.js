@@ -61,6 +61,24 @@ botonGoma.addEventListener("click", function () { // click sobre botón goma
     estilo = grosorGoma.value;
 }); // eraserButton click
 
+// --------------------------------------------------
+// Limpiar lienzo y guardar imagen
+// --------------------------------------------------
+let botonLimpiar = document.getElementById("btn-limpiar");
+let botonGuardar = document.getElementById("btn-guardar");
+
+botonLimpiar.addEventListener("click", function () {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    imageDataOriginal = null; // ya no hay imagen cargada
+});
+
+botonGuardar.addEventListener("click", function () {
+    const enlace = document.createElement("a");
+    enlace.download = "mi-dibujo.png";
+    enlace.href = canvas.toDataURL("image/png");
+    enlace.click();
+});
+
 
 function main() {
     
