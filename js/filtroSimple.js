@@ -71,3 +71,48 @@ function aplicarPosterizacion(data, niveles = 4) {
         data[i + 2] = Math.round(data[i + 2] / paso) * paso; // B
     }
 }
+
+// --------------------------------------------------
+// PIXELADO
+// --------------------------------------------------
+// Divide la imagen en bloques de tamaño × tamaño píxeles.
+// Cada bloque queda pintado con el color promedio de sus píxeles,
+// produciendo el clásico efecto mosaico / retro.
+// --------------------------------------------------
+function aplicarPixelado(data, ancho, alto, tamBloque = 10) {
+    for (let y = 0; y < alto; y += tamBloque) {
+        for (let x = 0; x < ancho; x += tamBloque) {
+
+            // Límites del bloque (puede ser más pequeño en los bordes)
+            const xFin = Math.min(x + tamBloque, ancho);
+            const yFin = Math.min(y + tamBloque, alto);
+            const totalPixeles = (xFin - x) * (yFin - y);
+
+            // Suma de canales en el bloque
+            let sumaR = 0, sumaG = 0, sumaB = 0;
+            for (let by = y; by < yFin; by++) {
+                for (let bx = x; bx < xFin; bx++) {
+                    const idx = (by * ancho + bx) * 4;
+                    sumaR += data[idx];
+                    sumaG += data[idx + 1];
+                    sumaB += data[idx + 2];
+                }
+            }
+
+            // Color promedio del bloque
+            const r = Math.round(sumaR / totalPixeles);
+            const g = Math.round(sumaG / totalPixeles);
+            const b = Math.round(sumaB / totalPixeles);
+
+            // Pintar todos los píxeles del bloque con ese color
+            for (let by = y; by < yFin; by++) {
+                for (let bx = x; bx < xFin; bx++) {
+                    const idx = (by * ancho + bx) * 4;
+                    data[idx]     = r;
+                    data[idx + 1] = g;
+                    data[idx + 2] = b;
+                }
+            }
+        }
+    }
+}

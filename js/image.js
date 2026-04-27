@@ -10,6 +10,7 @@ let btnNegativo = document.getElementById("btn-negativo");
 let btnSepia = document.getElementById("btn-sepia");
 let btnBinarizacion = document.getElementById("btn-binarizacion");
 let btnPosterizacion = document.getElementById("btn-posterizacion");
+let btnPixelado = document.getElementById("btn-pixelado");
 let brilloSlider = document.getElementById("brillo-slider");
 
 // Filtros avanzados
@@ -91,6 +92,11 @@ btnPosterizacion.addEventListener("click", function () {
 brilloSlider.addEventListener("input", function () {
     const factor = this.value / 50;
     aplicarFiltro(aplicarBrillo, factor);
+});
+
+btnPixelado.addEventListener("click", function () {
+    if (!imageDataOriginal) return;
+    aplicarFiltro(aplicarPixelado, imageDataOriginal.width, imageDataOriginal.height, 10); // bloques de 10px
 });
 
 // --------------------------------------------------
