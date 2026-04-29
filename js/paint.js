@@ -1,20 +1,17 @@
-// --------------------------------------------------
-// Programa principal
-// --------------------------------------------------
-
 let canvas = document.getElementById("lienzo");
 let ctx = canvas.getContext("2d");
 
 let canvasWidth = canvas.width;
 let canvasHeight = canvas.height;
 
-let nroColor = document.getElementById("nroColor"); // Valor de color del input de rango
-let grosorLapiz = document.getElementById("grosor-lapiz"); // Grosor lápiz
-let grosorGoma = document.getElementById("grosor-goma"); // Grosor goma
+let nroColor = document.getElementById("nroColor"); 
+let grosorLapiz = document.getElementById("grosor-lapiz"); 
+let grosorGoma = document.getElementById("grosor-goma"); 
+let botonLimpiar = document.getElementById("btn-limpiar");
+let botonGuardar = document.getElementById("btn-guardar");
 
-// --------------------------------------------------
-// comportamiento del mouse
-// --------------------------------------------------
+
+
 let mouseDown = false;
 let pencilClicked = false;
 
@@ -28,7 +25,7 @@ canvas.addEventListener("mousedown", function (e) {
         miLapiz = new Pen(posX, posY, color, estilo);
         miLapiz.draw(ctx);
     }
-}); // mousedown
+}); 
 
 canvas.addEventListener("mousemove", function (e) {
     if (mouseDown && pencilClicked && miLapiz != null) {
@@ -37,15 +34,15 @@ canvas.addEventListener("mousemove", function (e) {
         miLapiz.moveTo(posX, posY);
         miLapiz.draw(ctx);
     }   
-}); // mousemove
+}); 
 
 canvas.addEventListener("mouseup", function (e) {
     mouseDown = false;
-}); // mouseup
+}); 
 
-// --------------------------------------------------
+
 // comportamiento de los botones
-// --------------------------------------------------
+
 let botonLapiz = document.getElementById("btn-lapiz");
 let botonGoma = document.getElementById("btn-goma");
 
@@ -53,23 +50,20 @@ botonLapiz.addEventListener("click", function () { // click sobre botón lápiz
     pencilClicked = true;
     color = nroColor.value;
     estilo = grosorLapiz.value;
-}); // pencilButton click
+}); 
 
 botonGoma.addEventListener("click", function () { // click sobre botón goma
     pencilClicked = true;
     color = "white";
     estilo = grosorGoma.value;
-}); // eraserButton click
+}); 
 
-// --------------------------------------------------
 // Limpiar lienzo y guardar imagen
-// --------------------------------------------------
-let botonLimpiar = document.getElementById("btn-limpiar");
-let botonGuardar = document.getElementById("btn-guardar");
+
 
 botonLimpiar.addEventListener("click", function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    imageDataOriginal = null; // ya no hay imagen cargada
+    imageDataOriginal = null;
 });
 
 botonGuardar.addEventListener("click", function () {

@@ -6,14 +6,14 @@ class Pen {
         this.posY = posY;
         this.fill = fill;
         this.estilo = estilo;
-    } // constructor()
+    } 
 
     moveTo(posX, posY) {
         this.antX = this.posX;
         this.antY = this.posY;
         this.posX = posX;
         this.posY = posY;
-    } // moveTo()
+    } 
 
     draw(ctx) {
         ctx.beginPath();
@@ -24,6 +24,6 @@ class Pen {
         ctx.lineTo(this.posX, this.posY);
         ctx.stroke();
         ctx.closePath();
-     } // draw()
+     } 
 
-} // class Pen
+} 

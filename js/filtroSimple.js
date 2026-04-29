@@ -1,7 +1,5 @@
-// --------------------------------------------------
-// Filtros simples — funciones puras sobre pixel data
-// Reciben un Uint8ClampedArray y lo modifican in-place
-// --------------------------------------------------
+// Filtros simples
+// Reciben un Uint8ClampedArray y lo modifican
 
 function aplicarEscalaGrises(data) {
     for (let i = 0; i < data.length; i += 4) {
@@ -9,7 +7,6 @@ function aplicarEscalaGrises(data) {
         data[i]     = promedio; // R
         data[i + 1] = promedio; // G
         data[i + 2] = promedio; // B
-        // data[i + 3] = alpha, no se toca
     }
 }
 
@@ -55,14 +52,8 @@ function aplicarBrillo(data, factor = 1) {
     }
 }
 
-// --------------------------------------------------
-// POSTERIZACIÓN
-// --------------------------------------------------
-// Reduce la cantidad de colores posibles a "niveles" escalones.
-// Ejemplo: niveles=4 → cada canal solo puede tomar los valores
-// 0, 85, 170 o 255 (cuatro pasos uniformes).
-// Produce un efecto de ilustración o cartel.
-// --------------------------------------------------
+
+// Reduce la cantidad de colores posibles a niveles
 function aplicarPosterizacion(data, niveles = 4) {
     const paso = 255 / (niveles - 1);
     for (let i = 0; i < data.length; i += 4) {
@@ -72,18 +63,13 @@ function aplicarPosterizacion(data, niveles = 4) {
     }
 }
 
-// --------------------------------------------------
-// PIXELADO
-// --------------------------------------------------
+
 // Divide la imagen en bloques de tamaño × tamaño píxeles.
 // Cada bloque queda pintado con el color promedio de sus píxeles,
-// produciendo el clásico efecto mosaico / retro.
-// --------------------------------------------------
 function aplicarPixelado(data, ancho, alto, tamBloque = 10) {
     for (let y = 0; y < alto; y += tamBloque) {
         for (let x = 0; x < ancho; x += tamBloque) {
 
-            // Límites del bloque (puede ser más pequeño en los bordes)
             const xFin = Math.min(x + tamBloque, ancho);
             const yFin = Math.min(y + tamBloque, alto);
             const totalPixeles = (xFin - x) * (yFin - y);
@@ -104,7 +90,7 @@ function aplicarPixelado(data, ancho, alto, tamBloque = 10) {
             const g = Math.round(sumaG / totalPixeles);
             const b = Math.round(sumaB / totalPixeles);
 
-            // Pintar todos los píxeles del bloque con ese color
+            // Pinta todos los píxeles con ese color
             for (let by = y; by < yFin; by++) {
                 for (let bx = x; bx < xFin; bx++) {
                     const idx = (by * ancho + bx) * 4;
